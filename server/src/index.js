@@ -67,6 +67,7 @@ wss.on('connection', (ws) => {
         boards[currentBoardId].objects.push(obj);
         broadcast(currentBoardId, { type: 'create-object', object: obj });
         ws.send(JSON.stringify({ type: 'create-object', object: obj }));
+        console.log(`[ws] создан объект ${obj.type} на доске ${currentBoardId}`);
         break;
       }
       case 'update-object': {
@@ -95,6 +96,7 @@ wss.on('connection', (ws) => {
         const board = boards[currentBoardId];
         board.objects = board.objects.filter(o => o.id !== msg.id);
         broadcast(currentBoardId, { type: 'delete-object', id: msg.id }, ws);
+        console.log(`[ws] удалён объект ${msg.id}`);
         break;
       }
     }
