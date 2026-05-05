@@ -1,0 +1,86 @@
+.props-panel {
+  width: 220px;
+  flex-shrink: 0;
+  background: #1a1a2e;
+  border-left: 1px solid #2a2a3e;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.props-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #aaa;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #2a2a3e;
+}
+
+.btn-delete {
+  background: transparent;
+  color: #ef4444;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: 1px solid #ef444433;
+}
+
+.btn-delete:hover {
+  background: #ef444420;
+  transform: none;
+}
+
+.props-type {
+  font-size: 12px;
+  color: #666;
+}
+
+.props-type strong {
+  color: #7c6af7;
+}
+
+.props-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.props-section label {
+  font-size: 11px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.props-section input[type="number"],
+.props-section input[type="text"],
+.props-section input:not([type="color"]),
+.props-section textarea {
+  width: 100%;
+  background: #12121f;
+  border: 1px solid #2a2a3e;
+  color: #e0e0e0;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 13px;
+}
+
+.props-section input[type="color"] {
+  width: 100%;
+  height: 32px;
+  padding: 2px;
+  background: #12121f;
+  border: 1px solid #2a2a3e;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.props-section textarea {
+  resize: vertical;
+  font-family: inherit;
+}
