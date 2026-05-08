@@ -8,12 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Хранилище досок в памяти
 const boards = {};
 
-// ─── REST API ───────────────────────────────────────────────
-
-// Создать доску
 app.post('/board', (req, res) => {
   const id = uuidv4();
   boards[id] = { id, objects: [] };
@@ -21,19 +17,15 @@ app.post('/board', (req, res) => {
   res.json({ id });
 });
 
-// Получить доску
 app.get('/board/:id', (req, res) => {
   const board = boards[req.params.id];
   if (!board) return res.status(404).json({ error: 'Доска не найдена' });
   res.json(board);
 });
 
-// ─── WebSocket ───────────────────────────────────────────────
-
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-// boardId -> Set of ws clients
 const boardClients = {};
 
 function broadcast(boardId, message, excludeWs = null) {
@@ -56,7 +48,6 @@ wss.on('connection', (ws) => {
     try { msg = JSON.parse(raw); } catch { return; }
 
     switch (msg.type) {
-
       case 'join-board': {
         const { boardId } = msg;
         if (!boards[boardId]) {
@@ -67,11 +58,9 @@ wss.on('connection', (ws) => {
         if (!boardClients[boardId]) boardClients[boardId] = new Set();
         boardClients[boardId].add(ws);
         console.log(`[ws] клиент подключился к доске ${boardId}`);
-        // Отправляем текущее состояние доски
         ws.send(JSON.stringify({ type: 'board-state', board: boards[boardId] }));
         break;
       }
-
       case 'create-object': {
         if (!currentBoardId) return;
         const obj = { ...msg.object, id: uuidv4() };
@@ -81,7 +70,6 @@ wss.on('connection', (ws) => {
         console.log(`[ws] создан объект ${obj.type} на доске ${currentBoardId}`);
         break;
       }
-
       case 'update-object': {
         if (!currentBoardId) return;
         const board = boards[currentBoardId];
@@ -92,7 +80,6 @@ wss.on('connection', (ws) => {
         }
         break;
       }
-
       case 'move-object': {
         if (!currentBoardId) return;
         const board = boards[currentBoardId];
@@ -104,7 +91,6 @@ wss.on('connection', (ws) => {
         }
         break;
       }
-
       case 'delete-object': {
         if (!currentBoardId) return;
         const board = boards[currentBoardId];

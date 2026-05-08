@@ -17,8 +17,11 @@
 - **Realtime:** WebSocket (ws)
 
 ## Структура проекта
+
+```
 /client   — React-приложение
 /server   — Node.js + Express + WebSocket
+```
 
 ## Запуск проекта
 
